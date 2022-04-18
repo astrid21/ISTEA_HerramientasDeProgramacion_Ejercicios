@@ -1,0 +1,93 @@
+﻿@model RecuperatorioMVCCore.Models.IndexVM
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <b>
+        Apellido y nombre del alumno: Malamud Astrid
+    </b>
+    <div style="background-color:cornflowerblue; padding: 5px">
+        @using (@Html.BeginForm("Index", "Home"))
+        {
+            @Html.LabelFor(m => m.Id) <span>:</span>
+            @Html.DisplayFor(m => m.Id)
+            @Html.HiddenFor(m => m.Id)
+            <br />
+            <br />
+            @Html.LabelFor(m => m.OperadorA) <span>:</span>
+            @Html.EditorFor(m => m.OperadorA)
+            @Html.ValidationMessageFor(m => m.OperadorA)
+            <br />
+            <br />
+            <input name="sumar" type="submit" value="+" />
+            <input name="multiplicar" type="submit" value="*" />
+            <input name="sumar111y1" type="submit" value="Sumar 111 + 1" />
+            <input name="OpaMasOpb" type="submit" value="Ver tipo: OpeA + OpeB" />
+            <br />
+            <br />
+            @Html.LabelFor(m => m.OperadorB) <span>:</span>
+            @Html.EditorFor(m => m.OperadorB)
+            @Html.ValidationMessageFor(m => m.OperadorB)
+            <br />
+            <br />
+            @Html.LabelFor(m => m.Resultado) <span>:</span>
+            @Html.DisplayFor(m => m.Resultado)
+            @Html.ValidationMessageFor(m => m.Resultado)
+            <br />
+
+
+        }
+
+        @Html.ValidationSummary()
+    </div>
+
+    @if (Model.Operaciones.Count != 0)
+    {
+        <div style="background-color:#ffd5b7">
+            @Html.ActionLink("Eliminar todos", "EliminarATodos", "Home")
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            @Html.ActionLink("Cambiar = por >>>", "CambiarSignoIgual", "Home")
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            @Html.ActionLink("Dejar ultimos 5 registros", "DejarUltimosCinco", "Home")
+            <br /><br />
+            <table border="1">
+                <tr style="background-color: lightblue">
+                    <td>@Html.LabelFor(m => m.Id)</td>
+                    <td>Comando</td>
+                    <td>Comando</td>
+                </tr>
+                @foreach (var operacion in Model.Operaciones)
+                {
+                    <tr>
+                        <td>
+                            @operacion.Id
+                        </td>
+                        <td>
+                            @operacion.Valor
+                        </td>
+                        <td>
+                            @Html.ActionLink("Eliminar", "Eliminar", "Home", new { id = operacion.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            <br />Total de clientes: @Model.Operaciones.Count
+
+        </div>
+    }
+    else
+    {
+        <span style="color:red">
+            No existen regsitros.
+        </span>
+    }
+
+</body>
+</html>
