@@ -1,0 +1,97 @@
+﻿@model RecuperatorioMVCCore.Models.IndexVM
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <b>Nombre y apellido del alumno: ASTRID MALAMUD</b>
+    <br />
+    <br />
+    <div style="background-color:aqua" ;">
+        @using (@Html.BeginForm("Index", "Home"))
+        {
+            @Html.LabelFor(m => m.Id) <span>:</span>
+            @Html.DisplayFor(m => m.Id)
+            @Html.HiddenFor(m => m.Id)
+            <br />
+            @Html.LabelFor(m => m.Valor) <span>:</span>
+            @Html.EditorFor(m => m.Valor)
+            @Html.ValidationMessageFor(m => m.Valor)
+            <br />
+            <input name="insertarBtn" type="submit" value="Insertar" />
+            <br />
+            @Html.ValidationSummary()
+            <br />
+        }
+    </div>
+
+    @if (Model.Nombres.Count > 0)
+    {
+<div style="background-color:lightpink">
+    <span style="margin: 10px;">
+        @Html.ActionLink("Eliminar todos", "EliminarTodos", "Home")
+    </span>
+    <span style="margin: 10px;">
+        @Html.ActionLink("Pasar a mayusculas", "PasarMayusculas", "Home")
+    </span>
+    <span style="margin: 10px;">
+        @Html.ActionLink("Renumerar", "Renumerar", "Home")
+    </span>
+    <span style="margin: 10px;">
+        @Html.ActionLink("Permutar", "Permutar", "Home")
+    </span>
+    <span style="margin: 10px;">
+        @Html.ActionLink("Cantidad de caracteres", "CantCaracteres", "Home")
+    </span>
+    <br />
+    <br />
+
+    <table border="1">
+        <tr>
+            <td>
+                @Html.LabelFor(m => m.Id)
+            </td>
+            <td>
+                @Html.LabelFor(m => m.Valor)
+            </td>
+            <td>
+                Comando
+            </td>
+            <td>
+                Comando
+            </td>
+        </tr>
+        @foreach (var n in Model.Nombres)
+        {
+            <tr>
+                <td>
+                    @n.Id
+                </td>
+                <td>
+                    @n.Valor
+                </td>
+                <td>
+                    @Html.ActionLink("Eliminar", "Eliminar", "Home", new { id = @n.Id })
+                </td>
+                <td>
+                    @Html.ActionLink("Seleccionar", "Seleccionar", "Home", new { id = @n.Id })
+                </td>
+            </tr>
+        }
+    </table>
+
+    <br />Total de clientes: @Model.Nombres.Count
+
+</div>
+    }
+    else
+    {
+        <div style="color:red">
+            No existen registros
+        </div>
+    }
+</body>
+</html>
